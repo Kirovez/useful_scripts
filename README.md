@@ -1,4 +1,4 @@
-# This is a set of scripts that we use in our laboratory for certain tasks 
+# This is a set of scripts that we use in our [group of plant proteomics](http://plantprot.lab/) for certain routine tasks 
 ### PeptideCutterParser.py
 __Description__: This script is useful for overlapping the protease sites cleavage and sites of MS peptide origins. 
 	It require Internet connection and that protein ids are recognizable by [PeptideCutter](https://web.expasy.org/peptide_cutter/) which is used to determine the cleavage sites.
