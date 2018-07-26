@@ -8,6 +8,10 @@ __Usage__: python3 PeptideCutterParser.py table
 	table - a tab separated table with first two columns are (!no header!):
 	1. Protein ID (!recognizable by Expasy PeptideCutter)
 	2. Sites for MS peptide origin (e.g. 23-35).
+	
+Note: This table can be generated from another table obtained from search of MS peptide 
+matching to uniprot database proteins [on this website](https://research.bioinformatics.udel.edu/peptidematch/batchpeptidematch.jsp) 
+
 __Example__:
 
 A9SNP9	118-127
