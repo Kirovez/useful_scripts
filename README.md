@@ -4,9 +4,8 @@ __Description__: This script is useful for overlapping the protease sites cleava
 	It require Internet connection and that protein ids are recognizable by [Expasy PeptideCutter](https://web.expasy.org/peptide_cutter/) which is used to determine the cleavage sites.
 
 ### Dependencies
-pip install bs4
-pip install requests
-pip install lxml
+
+pip install bs4 requests lxml
 
 __Usage__: python3 PeptideCutterParser.py table
 
