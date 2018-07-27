@@ -3,6 +3,11 @@
 __Description__: This script is useful for overlapping the protease sites cleavage and sites of MS peptide origins. 
 	It require Internet connection and that protein ids are recognizable by [Expasy PeptideCutter](https://web.expasy.org/peptide_cutter/) which is used to determine the cleavage sites.
 
+### Dependencies
+pip install bs4
+pip install requests
+pip install lxml
+
 __Usage__: python3 PeptideCutterParser.py table
 
 	table - a tab separated table with first two columns are (!no header!):
