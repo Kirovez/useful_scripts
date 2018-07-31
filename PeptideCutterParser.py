@@ -16,6 +16,11 @@ class PeptideCutterLoop():
 
 
     def getResponse(self,id):
+        """
+        Send post request to the server
+        :param id: protein id
+        :return: response object
+        """
         headers = {'User-Agent': 'Mozilla/5.0'}
         payload = {'protein': id, 'enzyme_number': 'all_enzymes', 'cleave_number': 'all', 'alphtable': 'alphtable'}
 
@@ -25,6 +30,14 @@ class PeptideCutterLoop():
         return response
 
     def parseResponse(self,response, id):
+        """
+        parsing response from the server
+        :param response: response object from self.getResponse
+        :param id: proteins_id
+        :return:
+        write parsing results in separate file "./PC_tmp_files/table_{}.txt".format(id)
+
+        """
         soup = BeautifulSoup(response.content, "lxml")
         out = open("./PC_tmp_files/table_{}.txt".format(id), "w")
         table = soup.findAll("table", class_="proteomics2")[0]
@@ -40,6 +53,12 @@ class PeptideCutterLoop():
         # time.sleep(5)
 
     def getOverlap(self, pep_coords,cleavege_file):
+        """
+        compare coordinates of peptide and cleaveg sites
+        :param pep_coords:
+        :param cleavege_file: file from
+        :return:
+        """
         pep_coords = [coords.split("-") for coords in pep_coords.split(", ")]
         int_coords = []
         for coords in pep_coords:
@@ -76,15 +95,16 @@ class PeptideCutterLoop():
 
     def run(self):
         with open(self.table_pep_id_coords) as infile:
-            self.outFile.write("\t".join(['protein_id', "Name of enzyme overlap START", "Name of enzyme overlap END"]) + "\n")
+            self.outFile.write("\t".join(['protein_id', 'peptide_seq' ,"Name of enzyme overlap START", "Name of enzyme overlap END"]) + "\n")
             for i, lines in enumerate(infile):
                 sp = lines.rstrip().split("\t")
                 id = sp[0]
                 print(i, id)
+                peptide_seq = sp[2]
                 peptides_coords = sp[1]
                 resp = self.getResponse(id)
                 self.parseResponse(resp, id)
-                self.outFile.write(id + "\t")
+                self.outFile.write(id + "\t" + peptide_seq + "\t")
                 self.getOverlap(peptides_coords,"./PC_tmp_files/table_{}.txt".format(id))
 
         self.outFile.close()
@@ -106,7 +126,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='This script is useful for overlapping the protease sites cleavage and sites of MS peptide origins.')
     parser.add_argument("table", help='a tab separated table with first two columns are (!no header!): 	\n'
                                       '1. Protein ID (!recognizable by PeptideCutter) \n \
-	                                   2. Sites for MS peptide origin (e.g. 23-35)')
+	                                   2. Sites for MS peptide origin (e.g. 23-35) \n \
+                                       3. Peptide sequence')
+
 
     args = parser.parse_args()
     if not os.path.isfile(args.table):
